@@ -10,8 +10,4 @@ router.get("/test", (req, res) =>
   })
 );
 
-// @route   GET api/profile/test
-// @desc    Tests posts route
-// @access  Public
-
 module.exports = router;
