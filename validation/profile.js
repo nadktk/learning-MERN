@@ -21,7 +21,7 @@ module.exports = function validateProfileInput(data) {
   skills = !isEmpty(skills) ? skills : "";
 
   if (!validator.isLength(handle, { min: 2, max: 30 })) {
-    errors.handle = "Handle must be between 2 and 4 characters";
+    errors.handle = "Handle must be between 2 and 30 characters";
   }
 
   if (validator.isEmpty(handle)) {
