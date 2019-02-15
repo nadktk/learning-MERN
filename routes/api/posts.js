@@ -153,4 +153,78 @@ router.post(
   }
 );
 
+// @route   POST api/posts/comment/:id
+// @desc    Add comment to post route
+// @access  Private
+router.post(
+  "/comment/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validatePostInput(req.body);
+
+    // check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    Post.findById(req.params.id)
+      .then(post => {
+        const { text, name, avatar } = req.body;
+        const newComment = {
+          text,
+          name,
+          avatar,
+          user: req.user.id
+        };
+
+        // add to comments array
+        post.comments.unshift(newComment);
+
+        // save
+        post.save().then(post => res.json(post));
+      })
+      .catch(err => res.status(404).json({ nopost: "This post is not found" }));
+  }
+);
+
+// @route   DELETE api/posts/comment/:id/:comment_id
+// @desc    Delete comment from post route
+// @access  Private
+router.delete(
+  "/comment/:id/:comment_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Post.findById(req.params.id)
+      .then(post => {
+        // check to see if comment exists
+        const commentToDelete = post.comments.find(
+          comment => comment._id.toString() === req.params.comment_id
+        );
+        if (!commentToDelete)
+          return res
+            .status(404)
+            .json({ nocomment: "The comment with this ID doesn't exist" });
+
+        // check if the user is allowed to delete comment
+        if (
+          commentToDelete.user.toString() !== req.user.id &&
+          post.user.toString() !== req.user.id
+        )
+          return res
+            .status(400)
+            .json({ norights: "You are not allowed to delete this comment" });
+
+        // remove comment
+        const newComments = post.comments.filter(
+          comment => comment._id.toString() !== req.params.comment_id
+        );
+        post.comments = newComments;
+
+        // save
+        post.save().then(post => res.json(post));
+      })
+      .catch(err => res.status(404).json({ nopost: "This post is not found" }));
+  }
+);
+
 module.exports = router;
