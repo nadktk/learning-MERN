@@ -40,7 +40,7 @@ module.exports = function validateRegisterInput(data) {
   }
 
   if (!validator.equals(password, password2)) {
-    errors.password = "Passwords must match";
+    errors.password2 = "Passwords must match";
   }
 
   return {

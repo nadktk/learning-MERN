@@ -13,6 +13,10 @@ img {
   margin-bottom: -50px;
 }
 
+.full-height {
+  min-height: calc(100vh - 12rem);
+}
+
 .landing-inner {
   padding-top: 80px;
 }
