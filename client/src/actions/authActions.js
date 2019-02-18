@@ -1,4 +1,4 @@
-import { GET_ERRORS, SET_CURRENT_USER } from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, LOGOUT_USER } from "./types";
 
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
@@ -47,3 +47,18 @@ export const setCurrentUser = decoded => ({
   type: SET_CURRENT_USER,
   payload: decoded
 });
+
+// set logged in user
+export const deleteCurrentUser = () => ({
+  type: LOGOUT_USER
+});
+
+// log out user
+export const logoutUser = () => dispatch => {
+  // remove the token from local storage
+  localStorage.removeItem("jwtToken");
+  // remove auth header for future requests
+  setAuthToken(false);
+  // set current user to {} and isAuthenticated to false
+  dispatch(deleteCurrentUser());
+};
