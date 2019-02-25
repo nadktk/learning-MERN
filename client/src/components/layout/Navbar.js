@@ -16,7 +16,12 @@ class Navbar extends Component {
 
     const authLinks = (
       <ul className="navbar-nav ml-auto">
-        <li className="nav-itemnav-link ">
+        <li className="nav-item nav-link">
+          <Link to="/dashboard" className="nav-link">
+            Dashboard
+          </Link>
+        </li>
+        <li className="nav-item nav-link">
           <img
             className="rounded-circle"
             src={user.avatar}
