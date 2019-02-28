@@ -45,13 +45,12 @@ export const addExperience = (expData, history) => dispatch => {
   axios
     .post("/api/profile/experience", expData)
     .then(() => history.push("/dashboard"))
-    .catch(err => {
-      console.log(err.response.status);
-      return dispatch({
+    .catch(err =>
+      dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      });
-    });
+      })
+    );
 };
 
 // delete account & profile
