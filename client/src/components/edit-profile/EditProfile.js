@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+
 import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
@@ -38,62 +39,117 @@ class EditProfile extends Component {
     this.props.getCurrentProfile();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.errors && nextProps.errors !== prevState.errors) {
+      return { errors: nextProps.errors };
+    } else return null;
+  }
 
-    if (nextProps.profile.profile) {
-      const { profile } = nextProps.profile;
-
+  componentDidUpdate(prevProps, prevState) {
+    const { profile } = this.props.profile;
+    if (profile && profile !== prevProps.profile.profile) {
+      let {
+        handle,
+        company,
+        website,
+        location,
+        githubusername,
+        skills,
+        bio,
+        status,
+        social
+      } = profile;
       // bring skills array to comma separated values
-      const skillsCSV = profile.skills.join(",");
+      const skillsCSV = skills.join(",");
 
       // if profile field doesn't exist, make empty string
-      profile.company = !isEmpty(profile.company) ? profile.company : "";
-      profile.website = !isEmpty(profile.website) ? profile.website : "";
-      profile.location = !isEmpty(profile.location) ? profile.location : "";
-      profile.githubusername = !isEmpty(profile.githubusername)
-        ? profile.githubusername
-        : "";
-      profile.bio = !isEmpty(profile.bio) ? profile.bio : "";
-      profile.social = !isEmpty(profile.social) ? profile.social : {};
-      profile.social.twitter = !isEmpty(profile.social.twitter)
-        ? profile.social.twitter
-        : "";
-      profile.social.youtube = !isEmpty(profile.social.youtube)
-        ? profile.social.youtube
-        : "";
-      profile.social.instagram = !isEmpty(profile.social.instagram)
-        ? profile.social.instagram
-        : "";
-      profile.social.linkedin = !isEmpty(profile.social.linkedin)
-        ? profile.social.linkedin
-        : "";
-      profile.social.facefook = !isEmpty(profile.social.facefook)
-        ? profile.social.facefook
-        : "";
+      company = !isEmpty(company) ? company : "";
+      website = !isEmpty(website) ? website : "";
+      location = !isEmpty(location) ? location : "";
+      githubusername = !isEmpty(githubusername) ? githubusername : "";
+      bio = !isEmpty(bio) ? bio : "";
+      social = !isEmpty(social) ? social : {};
+      social.twitter = !isEmpty(social.twitter) ? social.twitter : "";
+      social.youtube = !isEmpty(social.youtube) ? social.youtube : "";
+      social.instagram = !isEmpty(social.instagram) ? social.instagram : "";
+      social.linkedin = !isEmpty(social.linkedin) ? social.linkedin : "";
+      social.facefook = !isEmpty(social.facefook) ? social.facefook : "";
 
       // set component fields state
       this.setState({
-        handle: profile.handle,
-        company: profile.company,
-        website: profile.website,
-        location: profile.location,
-        status: profile.status,
+        handle,
+        company,
+        website,
+        location,
+        status,
         skills: skillsCSV,
-        githubusername: profile.githubusername,
-        bio: profile.bio,
-        twitter: profile.social.twitter,
-        youtube: profile.social.youtube,
-        instagram: profile.social.instagram,
-        linkedin: profile.social.linkedin,
-        facebook: profile.social.facebook
+        githubusername,
+        bio,
+        twitter: social.twitter,
+        youtube: social.youtube,
+        instagram: social.instagram,
+        linkedin: social.linkedin,
+        facebook: social.facebook
       });
     }
   }
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.errors) {
+  //     this.setState({
+  //       errors: nextProps.errors
+  //     });
+  //   }
+
+  //   if (nextProps.profile.profile) {
+  //     const { profile } = nextProps.profile;
+
+  //     // bring skills array to comma separated values
+  //     const skillsCSV = profile.skills.join(",");
+
+  //     // if profile field doesn't exist, make empty string
+  //     profile.company = !isEmpty(profile.company) ? profile.company : "";
+  //     profile.website = !isEmpty(profile.website) ? profile.website : "";
+  //     profile.location = !isEmpty(profile.location) ? profile.location : "";
+  //     profile.githubusername = !isEmpty(profile.githubusername)
+  //       ? profile.githubusername
+  //       : "";
+  //     profile.bio = !isEmpty(profile.bio) ? profile.bio : "";
+  //     profile.social = !isEmpty(profile.social) ? profile.social : {};
+  //     profile.social.twitter = !isEmpty(profile.social.twitter)
+  //       ? profile.social.twitter
+  //       : "";
+  //     profile.social.youtube = !isEmpty(profile.social.youtube)
+  //       ? profile.social.youtube
+  //       : "";
+  //     profile.social.instagram = !isEmpty(profile.social.instagram)
+  //       ? profile.social.instagram
+  //       : "";
+  //     profile.social.linkedin = !isEmpty(profile.social.linkedin)
+  //       ? profile.social.linkedin
+  //       : "";
+  //     profile.social.facefook = !isEmpty(profile.social.facefook)
+  //       ? profile.social.facefook
+  //       : "";
+
+  //     // set component fields state
+  //     this.setState({
+  //       handle: profile.handle,
+  //       company: profile.company,
+  //       website: profile.website,
+  //       location: profile.location,
+  //       status: profile.status,
+  //       skills: skillsCSV,
+  //       githubusername: profile.githubusername,
+  //       bio: profile.bio,
+  //       twitter: profile.social.twitter,
+  //       youtube: profile.social.youtube,
+  //       instagram: profile.social.instagram,
+  //       linkedin: profile.social.linkedin,
+  //       facebook: profile.social.facebook
+  //     });
+  //   }
+  // }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });

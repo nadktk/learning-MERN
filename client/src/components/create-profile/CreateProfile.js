@@ -33,12 +33,18 @@ class CreateProfile extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.errors) {
+  //     this.setState({
+  //       errors: nextProps.errors
+  //     });
+  //   }
+  // }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.errors && nextProps.errors !== prevState.errors) {
+      return { errors: nextProps.errors };
+    } else return null;
   }
 
   onChange(e) {
