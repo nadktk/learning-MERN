@@ -43,7 +43,7 @@ class Experience extends Component {
               <th />
             </tr>
           </thead>
-          {experience}
+          <tbody>{experience}</tbody>
         </table>
       </div>
     );
@@ -51,7 +51,6 @@ class Experience extends Component {
 }
 
 Experience.propTypes = {
-  experience: PropTypes.arrayOf(PropTypes.object),
   deleteExperience: PropTypes.func.isRequired
 };
 
