@@ -19,7 +19,6 @@ class Education extends Component {
           {" - "}
           {edu.to ? <Moment format="YYYY/MM/DD">{edu.to}</Moment> : "Now"}
         </td>
-        <td>{edu.description}</td>
         <td>
           <button
             className="btn btn-danger"
@@ -39,7 +38,6 @@ class Education extends Component {
               <th>School</th>
               <th>Degree</th>
               <th>Years</th>
-              <th>Description</th>
               <th />
             </tr>
           </thead>

@@ -19,7 +19,6 @@ class Experience extends Component {
           {" - "}
           {exp.to ? <Moment format="YYYY/MM/DD">{exp.to}</Moment> : "Now"}
         </td>
-        <td>{exp.description}</td>
         <td>
           <button
             className="btn btn-danger"
@@ -39,7 +38,6 @@ class Experience extends Component {
               <th>Company</th>
               <th>Title</th>
               <th>Years</th>
-              <th>Description</th>
               <th />
             </tr>
           </thead>
