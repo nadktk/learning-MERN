@@ -41,7 +41,7 @@ class ProfileCreds extends Component {
           {edu.current ? "Now" : <Moment format="DD/MM/YYYY">{edu.to}</Moment>}
         </p>
         <p>
-          <strong>Position: </strong>
+          <strong>Degree: </strong>
           {edu.degree}
         </p>
         <p>
