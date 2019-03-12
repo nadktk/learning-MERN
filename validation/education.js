@@ -11,8 +11,8 @@ module.exports = function validateEducationInput(data) {
   fieldofstudy = !isEmpty(fieldofstudy) ? fieldofstudy : "";
   from = !isEmpty(from) ? from : "";
 
-  if (!validator.isLength(school, { min: 2, max: 30 })) {
-    errors.school = "School title must be between 2 and 30 characters";
+  if (!validator.isLength(school, { min: 2, max: 50 })) {
+    errors.school = "School title must be between 2 and 50 characters";
   }
 
   if (validator.isEmpty(school)) {
