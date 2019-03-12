@@ -5,7 +5,7 @@ export default function(state = {}, action) {
     case GET_ERRORS:
       return action.payload;
     case CLEAR_ERRORS:
-      return state;
+      return {};
     default:
       return state;
   }

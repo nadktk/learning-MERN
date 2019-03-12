@@ -11,17 +11,15 @@ import {
 
 // add post
 export const addPost = postData => dispatch => {
+  dispatch(clearErrors());
   axios
     .post("api/posts", postData)
-    .then(res => {
-      dispatch({
-        type: CLEAR_ERRORS
-      });
+    .then(res =>
       dispatch({
         type: ADD_POST,
         payload: res.data
-      });
-    })
+      })
+    )
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -119,17 +117,15 @@ export const removeLike = id => dispatch => {
 
 // add comment
 export const addComment = (postId, commentData) => dispatch => {
+  dispatch(clearErrors());
   axios
     .post(`/api/posts/comment/${postId}`, commentData)
-    .then(res => {
-      dispatch({
-        type: CLEAR_ERRORS
-      });
+    .then(res =>
       dispatch({
         type: GET_POST,
         payload: res.data
-      });
-    })
+      })
+    )
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -155,6 +151,9 @@ export const deleteComment = (postId, commentId) => dispatch => {
       })
     );
 };
+
+// set loading state
+export const clearErrors = () => ({ type: CLEAR_ERRORS });
 
 // set loading state
 export const setPostLoading = () => ({ type: LOADING_POST });
